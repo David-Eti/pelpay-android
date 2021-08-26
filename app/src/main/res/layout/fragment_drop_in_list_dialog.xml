@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/background_color"
+    android:orientation="vertical"
+    tools:ignore="UseCompoundDrawables">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/selectionToolBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:navigationIcon="?attr/homeAsUpIndicator"
+        app:title="Select Payment Method"
+        app:titleTextAppearance="@style/TextAppearance.AppCompat.Subhead"
+        app:titleTextColor="@color/black" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipToPadding="false"
+        android:hapticFeedbackEnabled="true"
+        android:paddingTop="@dimen/list_item_spacing_half"
+        android:paddingBottom="@dimen/list_item_spacing_half"
+        tools:context="ui.dropInUI.DropInFragment"
+        tools:listitem="@layout/fragment_drop_in_list_dialog_item" />
+
+    <include layout="@layout/layout_secured_logo" />
+</LinearLayout>

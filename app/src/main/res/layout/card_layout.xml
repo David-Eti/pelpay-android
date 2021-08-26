@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="32dp"
+    android:layout_marginTop="40dp"
+    android:layout_marginEnd="32dp"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/cardNumberInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ui.library.maskededittext.MaskedEditText
+                android:id="@+id/card_number"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="0dp"
+                android:hint="@string/card_number_hint"
+                android:imeOptions="actionNext"
+                android:inputType="number"
+                android:maxLength="23"
+                android:nextFocusLeft="@id/expiry"
+                android:nextFocusRight="@id/expiry"
+                android:nextFocusUp="@id/expiry"
+                android:nextFocusDown="@id/expiry"
+                android:nextFocusForward="@id/expiry"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                app:mask="**** **** **** **** ***" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <ImageView
+            android:id="@+id/card_type"
+            android:layout_width="52dp"
+            android:layout_height="18dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:scaleType="fitEnd" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:orientation="horizontal">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/expiryInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <ui.library.maskededittext.MaskedEditText
+                android:id="@+id/expiry"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="0dp"
+                android:layout_marginBottom="0dp"
+                android:cursorVisible="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:hint="@string/expiry_hint"
+                android:imeOptions="actionNext"
+                android:inputType="number"
+                android:maxLength="7"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                app:mask="**/****" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <androidx.legacy.widget.Space
+            android:layout_width="4dp"
+            android:layout_height="1dp" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/cvvInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <ui.library.maskededittext.MaskedEditText
+                android:id="@+id/cvv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="0dp"
+                android:cursorVisible="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:hint="@string/cvv_cvc_hint"
+                android:imeOptions="actionNext"
+                android:inputType="number"
+                android:maxLength="3"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                app:mask="***" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </LinearLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/cardPinInputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_weight="1">
+
+        <ui.library.maskededittext.MaskedEditText
+            android:id="@+id/cardPin"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="0dp"
+            android:cursorVisible="true"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:hint="@string/card_pin"
+            android:imeOptions="actionDone"
+            android:inputType="numberPassword"
+            android:maxLength="4"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            app:mask="****" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+</LinearLayout>

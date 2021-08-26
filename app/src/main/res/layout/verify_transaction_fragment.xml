@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="ui.verify.VerifyTransactionFragment">
+
+    <ImageView
+        android:id="@+id/transactionIconImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="32dp"
+        android:contentDescription="@string/secured_by_pelpay"
+        android:paddingLeft="@dimen/list_item_spacing"
+        android:paddingRight="@dimen/list_item_spacing"
+        android:src="@drawable/ic_error_icon" />
+
+    <TextView
+        android:id="@+id/transactionTitleTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:maxLines="1"
+        android:paddingStart="32dp"
+        android:paddingEnd="32dp"
+        android:text="-- --"
+        android:textAppearance="?attr/textAppearanceHeadline6" />
+
+    <TextView
+        android:id="@+id/transactionSubtitleTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:maxLines="3"
+        android:paddingStart="32dp"
+        android:layout_marginBottom="32dp"
+        android:paddingEnd="32dp"
+        android:text="-- --"
+        android:textAppearance="?attr/textAppearanceSubtitle1" />
+
+
+    <include layout="@layout/layout_pay_button" />
+
+    <androidx.appcompat.widget.AppCompatButton xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/retryButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="10dp"
+        android:drawablePadding="-24dp"
+        android:drawableStart="@drawable/ic_outline_rotate_right_24"
+        android:layout_marginEnd="32dp"
+        android:background="@color/background_color"
+        android:text="@string/retry"
+        android:textColor="@color/black" />
+    <include
+        android:id="@+id/include"
+        layout="@layout/layout_secured_logo" />
+</LinearLayout>

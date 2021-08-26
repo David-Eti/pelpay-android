@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="ui.bankTransferChannel.BankTransferDetailsFragment">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/bankChannelDetailsToolBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:navigationIcon="?attr/homeAsUpIndicator"
+        app:title="Pay With Bank Transfer"
+        app:titleTextAppearance="@style/TextAppearance.AppCompat.Subhead"
+        app:titleTextColor="@color/black" />
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="none"
+        android:maxLines="3"
+        android:paddingStart="32dp"
+        android:paddingEnd="32dp"
+        android:layout_marginTop="32dp"
+        android:text="The account number provided\nbelow is unique to \nthis transaction"
+        android:textAppearance="?attr/textAppearanceHeadline6" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:ellipsize="end"
+        android:maxLines="3"
+        android:paddingStart="32dp"
+        android:paddingEnd="32dp"
+        android:text="@string/bank_info_1"
+        android:textAppearance="?attr/textAppearanceSubtitle1" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:background="@color/background_color"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginTop="16dp"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:ellipsize="end"
+            android:maxLines="3"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:text="Bank Name"
+            android:textAppearance="?attr/textAppearanceCaption" />
+
+        <TextView
+            android:id="@+id/bankNameTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:ellipsize="end"
+            android:maxLines="3"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:text="-- --"
+            android:textAppearance="?attr/textAppearanceSubtitle1" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:ellipsize="end"
+            android:maxLines="3"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:text="Bank Account Number"
+            android:textAppearance="?attr/textAppearanceCaption" />
+
+        <TextView
+            android:id="@+id/bankAccountNumberTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:ellipsize="end"
+            android:maxLines="3"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:layout_marginBottom="32dp"
+            android:text="-- --"
+            android:textAppearance="?attr/textAppearanceSubtitle1" />
+
+    </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:ellipsize="end"
+        android:maxLines="3"
+        android:paddingStart="32dp"
+        android:paddingEnd="32dp"
+        android:text="2. Transfer the amount from your preferred banking platorm"
+        android:textAppearance="?attr/textAppearanceSubtitle1" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:ellipsize="end"
+        android:maxLines="3"
+        android:paddingStart="32dp"
+        android:layout_marginBottom="32dp"
+        android:paddingEnd="32dp"
+        android:text="3. Click the button below once your transfer is completed"
+        android:textAppearance="?attr/textAppearanceSubtitle1" />
+
+    <include layout="@layout/layout_pay_button" />
+
+    <include
+        android:id="@+id/include"
+        layout="@layout/layout_secured_logo" />
+
+</LinearLayout>

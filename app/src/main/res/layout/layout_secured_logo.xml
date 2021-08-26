@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge>
+
+    <ImageView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/channel_image"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="80dp"
+        android:contentDescription="@string/secured_by_pelpay"
+        android:paddingLeft="@dimen/list_item_spacing"
+        android:paddingRight="@dimen/list_item_spacing"
+        android:src="@drawable/ic_secured_by_pelpay" />
+</merge>
+

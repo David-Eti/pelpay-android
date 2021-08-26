@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="@drawable/gradient_background"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ProgressBar
+            android:indeterminateDrawable="@drawable/dialog_background"
+            android:layout_width="96dp"
+            android:layout_height="96dp"/>
+
+
+    </RelativeLayout>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_marginTop="20dp"
+        android:id="@+id/message"
+        android:layout_width="wrap_content"
+        android:textColor="#555555"
+        android:text="@string/process_message"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>

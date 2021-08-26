@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_color"
+    android:orientation="vertical"
+    tools:context="ui.cardChannel.CardChannelFragment">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/cardToolBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:navigationIcon="?attr/homeAsUpIndicator"
+        app:title="Card Details"
+        app:titleTextAppearance="@style/TextAppearance.AppCompat.Subhead"
+        app:titleTextColor="@color/black" />
+
+    <ImageView
+        android:id="@+id/channel_image"
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:contentDescription="@string/secured_by_pelpay"
+        android:paddingLeft="32dp"
+        android:paddingRight="32dp"
+        android:src="@drawable/ic_payment_icons" />
+
+    <include layout="@layout/card_layout" />
+
+    <include layout="@layout/layout_pay_button" />
+    <include layout="@layout/layout_secured_logo" />
+
+</LinearLayout>
