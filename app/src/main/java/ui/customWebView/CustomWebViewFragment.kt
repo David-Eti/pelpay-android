@@ -1,11 +1,12 @@
 package ui.customWebView
 
 import android.annotation.SuppressLint
+import android.annotation.TargetApi
 import android.app.Dialog
-import android.app.ProgressDialog
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.net.http.SslError
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -13,14 +14,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.webkit.*
+import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.Toolbar
-import androidx.lifecycle.ViewModelProvider
 import application.PelpaySdk
 import com.example.pelpaysamplebuildandroid.R
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import enums.PaymentChannel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -30,8 +30,7 @@ import models.requests.CompleteCardRequest
 import models.responses.ProcessCardResponse
 import networking.NetworkServiceImpl
 import ui.library.LoadingProgressDialog
-import ui.otpView.OtpFragment
-import ui.otpView.OtpViewModel
+import ui.verify.VerifyTransactionFragment
 import utilities.ResultWrapper
 import java.net.URLEncoder
 import java.util.*
@@ -47,6 +46,7 @@ class CustomWebViewFragment constructor(var cardResponse: ProcessCardResponse) :
     private lateinit var webView: WebView
     private lateinit var progressDialog: LoadingProgressDialog
     private lateinit var randomString: String
+    private var loadCountPelpay =  0
 
     private fun setupFullHeight(bottomSheet: View) {
         val layoutParams = bottomSheet.layoutParams
@@ -65,6 +65,7 @@ class CustomWebViewFragment constructor(var cardResponse: ProcessCardResponse) :
                 val behaviour = BottomSheetBehavior.from(it)
                 setupFullHeight(it)
                 behaviour.state = BottomSheetBehavior.STATE_EXPANDED
+                behaviour.isDraggable = false
             }
         }
         return dialog
@@ -76,9 +77,13 @@ class CustomWebViewFragment constructor(var cardResponse: ProcessCardResponse) :
         val toolbar: Toolbar = view.findViewById(R.id.webToolBar)
         toolbar.navigationIcon?.setTint(Color.BLACK)
         toolbar.setNavigationOnClickListener(View.OnClickListener {
-            parentFragmentManager.beginTransaction().remove(this).commit()
+//            parentFragmentManager.beginTransaction().remove(this).commit()
+            val verifyTransactionFragment = VerifyTransactionFragment.newInstance()
+            verifyTransactionFragment.show(parentFragmentManager, verifyTransactionFragment.tag)
         })
         webView = view.findViewById(R.id.webView)
+        webView.settings.builtInZoomControls = true
+
         progressDialog = LoadingProgressDialog(requireContext())
 
         randomString = UUID.randomUUID().toString()
@@ -107,10 +112,20 @@ class CustomWebViewFragment constructor(var cardResponse: ProcessCardResponse) :
         webView.settings.setSupportZoom(true)
         webView.settings.loadWithOverviewMode = true
         webView.settings.useWideViewPort = true
+        webView.settings.useWideViewPort = true
+        webView.settings.domStorageEnabled = true
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            webView.settings.safeBrowsingEnabled = false
+        }
         webView.webChromeClient = object : WebChromeClient() {
+
+            override fun onPermissionRequest(request: PermissionRequest) {
+                request.grant(request.resources)
+            }
+
             override fun onProgressChanged(view: WebView?, newProgress: Int) {
                 super.onProgressChanged(view, newProgress)
-
                 if (newProgress >= 100) progressDialog.dismiss()
             }
         }
@@ -146,8 +161,7 @@ class CustomWebViewFragment constructor(var cardResponse: ProcessCardResponse) :
             }
 
             override fun onPageFinished(view: WebView, url: String) {
-                super.onPageFinished(view, url)
-
+//                super.onPageFinished(view, url)
                 Log.e("SECURE3D", "onPageFinished: $url")
 
                 if (url.startsWith("https://centinelapistag.cardinalcommerce.com/V1/Cruise/Collect")) {
@@ -163,7 +177,7 @@ class CustomWebViewFragment constructor(var cardResponse: ProcessCardResponse) :
                                  </body>
                                </html>  
                             """
-
+                    progressDialog.show()
                     webView.loadDataWithBaseURL("about:blank", htmlString, "text/html", "UTF-8", null)
                 }
 
@@ -202,6 +216,16 @@ class CustomWebViewFragment constructor(var cardResponse: ProcessCardResponse) :
                         }
                     }
 
+                }
+
+                if(url.startsWith("https://payment.pelpay.ng")){
+                    loadCountPelpay += 1
+                    Log.e("LOADCOUNT+", "$loadCountPelpay")
+                }
+
+                if(url.startsWith("https://payment.pelpay.ng") && loadCountPelpay >= 4){
+                    Log.e("LOADCOUNT++", "$loadCountPelpay")
+                    webView.stopLoading()
                 }
 
             }

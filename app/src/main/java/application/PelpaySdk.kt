@@ -30,26 +30,50 @@ object PelpaySdk {
     internal var accessToken: String? = null
     internal var merchantLogo: Drawable? = null
     internal var primaryColor = Color.parseColor("#009F49")
+    internal var primaryTextColor = Color.parseColor("#ffffff")
+
     private var supportFragment: Fragment? = null
     internal var isCardChannelEnabled = true
     internal var isBankChannelEnabled = true
     internal var isBankTransferChannelEnabled = true
     internal var advice: AdviceData? = null
     internal var transaction: Transaction? = null
+    internal var callback: PelpaySdkCallback? = null
+    internal var hidePelpayLogo = false
 
-
-    fun PelpaySdk(fragment: Fragment?) {
-        supportFragment = fragment
-    }
+//    fun PelpaySdk(fragment: Fragment?) {
+//        supportFragment = fragment
+//    }
 
     fun setTransaction(transaction: Transaction): PelpaySdk {
         this.transaction = transaction
         return this
     }
 
+    fun setBrandPrimaryColor(color: Int): PelpaySdk {
+        this.primaryColor = color
+        return this
+    }
+
+    fun setBrandPrimaryTextColor(color: Int): PelpaySdk {
+        this.primaryTextColor = color
+        return this
+    }
+
+    fun setHidePelpayLogo(isHidden: Boolean): PelpaySdk {
+        this.hidePelpayLogo = isHidden
+        return this
+    }
+
+
+    fun withCallBack(callback: PelpaySdkCallback): PelpaySdk {
+        this.callback = callback
+        return this
+    }
 
     @ExperimentalSerializationApi
-    suspend fun initialise(clientId: String, clientSecret: String, context: FragmentActivity): PelpaySdk {
+    suspend fun initialise(environment: Environment = Environment.Staging, clientId: String, clientSecret: String, context: FragmentActivity): PelpaySdk {
+        this.environment = environment
         this.clientId = clientId
         this.clientSecret = clientSecret
         val progress = LoadingProgressDialog(context)

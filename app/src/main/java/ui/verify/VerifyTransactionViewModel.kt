@@ -16,6 +16,8 @@ import utilities.ResultWrapper
 class VerifyTransactionViewModel : ViewModel() {
     var isLoading = MutableLiveData<Boolean>()
     var verifiedTransactionDetails = MutableLiveData<VerifiedTransactionDetails>()
+    var isSuccessFul  = MutableLiveData<Boolean>()
+    var errorMessage = MutableLiveData<String?>()
 
     @ExperimentalSerializationApi
     fun getTransactionDetails() {
@@ -27,6 +29,8 @@ class VerifyTransactionViewModel : ViewModel() {
                 is ResultWrapper.Success -> showSuccess(verifiedDetailsResponse.value)
                 else -> {
                     isLoading.value = false
+                    isSuccessFul.value = false
+                    errorMessage.value = "A unknown Error occurred. $verifiedDetailsResponse"
                     Log.e("VerifyTransactionVM", "showGenericError:  $verifiedDetailsResponse")
                 }
             }
@@ -36,16 +40,25 @@ class VerifyTransactionViewModel : ViewModel() {
     private fun showSuccess(transactionDetailsResponse: GetTransactionDetailsResponse) {
         isLoading.value = false
         this.verifiedTransactionDetails.value = transactionDetailsResponse.responseData
+        if (this.verifiedTransactionDetails.value?.transactionStatus?.lowercase()?.contains("success") == true){
+            isSuccessFul.value = true
+        }
+        else {
+            isSuccessFul.value = false
+            errorMessage.value = "${this.verifiedTransactionDetails.value?.transactionStatus}: ${this.verifiedTransactionDetails.value?.message}"
+        }
     }
 
     private fun showGenericError(verifiedDetailsResponse: ResultWrapper.GenericError) {
         isLoading.value = false
-        Log.d("VerifyTransactionVM", "GenericError:  $verifiedDetailsResponse")
+        isSuccessFul.value = false
+        errorMessage.value = "${verifiedDetailsResponse.error?.message}"
     }
 
     private fun showNetworkError() {
         isLoading.value = false
-        Log.d("VerifyTransactionVM", "NetworkError")
+        isSuccessFul.value = false
+        errorMessage.value = "A network Error occurred. Try again later."
     }
 
 }

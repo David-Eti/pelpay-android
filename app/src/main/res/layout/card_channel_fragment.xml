@@ -9,6 +9,9 @@
     android:orientation="vertical"
     tools:context="ui.cardChannel.CardChannelFragment">
 
+    <include
+        layout="@layout/layout_test_mode" />
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/cardToolBar"
         android:layout_width="match_parent"

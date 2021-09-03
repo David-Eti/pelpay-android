@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.Toolbar
@@ -53,6 +54,7 @@ class BankTransferDetailsFragment constructor(var selectedBank: SupportedBank)  
                 val behaviour = BottomSheetBehavior.from(it)
                 setupFullHeight(it)
                 behaviour.state = BottomSheetBehavior.STATE_EXPANDED
+                behaviour.isDraggable = false
             }
         }
         return dialog
@@ -80,7 +82,16 @@ class BankTransferDetailsFragment constructor(var selectedBank: SupportedBank)  
 
         payButton = view.findViewById(R.id.payButton)
 
+        payButton.setBackgroundColor(PelpaySdk.primaryColor)
+        payButton.setTextColor(PelpaySdk.primaryTextColor)
+
         payButton.text = String.format("I have transferred ₦%s", PelpaySdk.transaction?.amount)
+
+        if(PelpaySdk.hidePelpayLogo){
+            val securedLogo: ImageView = view.findViewById(R.id.secured_logo)
+            securedLogo.visibility = View.INVISIBLE
+        }
+
 
         return view
     }

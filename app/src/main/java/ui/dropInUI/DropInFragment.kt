@@ -1,16 +1,22 @@
 package ui.dropInUI
 
+import android.app.Dialog
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.LinearLayout
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import application.PelpaySdk
 import com.example.pelpaysamplebuildandroid.R
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import enums.Environment
 import enums.PaymentChannel
 import models.ui.PaymentChannelView
 import ui.bankChannel.BankChannelFragment
@@ -35,6 +41,21 @@ class DropInFragment : BottomSheetDialogFragment(), PaymentSelectionListener {
 
     private lateinit var itemAdapter: PaymentSelectionAdapter
 
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        val dialog = BottomSheetDialog(requireContext(), theme)
+        dialog.setOnShowListener {
+            val bottomSheetDialog = it as BottomSheetDialog
+            val parentLayout =
+                    bottomSheetDialog.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
+            parentLayout?.let { it ->
+                val behaviour = BottomSheetBehavior.from(it)
+                behaviour.state = BottomSheetBehavior.STATE_EXPANDED
+                behaviour.isDraggable = false
+            }
+        }
+        return dialog
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
@@ -45,13 +66,24 @@ class DropInFragment : BottomSheetDialogFragment(), PaymentSelectionListener {
         val view = inflater.inflate(R.layout.fragment_drop_in_list_dialog, container, false)
         val toolbar: Toolbar = view.findViewById(R.id.selectionToolBar)
         toolbar.navigationIcon?.setTint(Color.BLACK)
-        toolbar.setNavigationOnClickListener(View.OnClickListener {
+        toolbar.setNavigationOnClickListener {
+            PelpaySdk.callback?.onError(errorMessage = "User cancelled the transaction")
             parentFragmentManager.beginTransaction().remove(this).commit()
-        })
+        }
         val recyclerView: RecyclerView = view.findViewById(R.id.list)
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = itemAdapter
 
+
+        if(PelpaySdk.hidePelpayLogo){
+            val securedLogo: ImageView = view.findViewById(R.id.secured_logo)
+            securedLogo.visibility = View.INVISIBLE
+        }
+
+        if(PelpaySdk.environment == Environment.Production){
+            val testLayout: LinearLayout = view.findViewById(R.id.test_layout)
+            testLayout.visibility = View.GONE
+        }
 
 
         return view

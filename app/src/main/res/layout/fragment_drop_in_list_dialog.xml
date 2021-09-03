@@ -8,6 +8,8 @@
     android:orientation="vertical"
     tools:ignore="UseCompoundDrawables">
 
+    <include layout="@layout/layout_test_mode" />
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/selectionToolBar"
         android:layout_width="match_parent"

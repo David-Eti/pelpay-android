@@ -8,7 +8,7 @@
         android:id="@+id/webToolBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:navigationIcon="?attr/homeAsUpIndicator"
+        app:navigationIcon="@drawable/ic_baseline_cancel_24"
         app:title="Secure 3D"
         app:titleTextAppearance="@style/TextAppearance.AppCompat.Subhead"
         app:titleTextColor="@color/black" />
@@ -16,6 +16,6 @@
     <WebView
         android:id="@+id/webView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+    android:layout_height="match_parent"/>
 
 </LinearLayout>

@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import android.widget.ImageView
 import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.Toolbar
 import androidx.core.widget.addTextChangedListener
@@ -51,6 +52,7 @@ class OtpFragment constructor(var paymentReference: String, var paymentChannel: 
                 val behaviour = BottomSheetBehavior.from(it)
                 setupFullHeight(it)
                 behaviour.state = BottomSheetBehavior.STATE_EXPANDED
+                behaviour.isDraggable = false
             }
         }
         return dialog
@@ -76,9 +78,17 @@ class OtpFragment constructor(var paymentReference: String, var paymentChannel: 
 
         payButton = view.findViewById(R.id.payButton)
 
+        payButton.setBackgroundColor(PelpaySdk.primaryColor)
+        payButton.setTextColor(PelpaySdk.primaryTextColor)
         payButton.text = String.format("Complete Payment ₦%s", PelpaySdk.transaction?.amount)
 
         payButton.isEnabled = false
+
+        if(PelpaySdk.hidePelpayLogo){
+            val securedLogo: ImageView = view.findViewById(R.id.secured_logo)
+            securedLogo.visibility = View.INVISIBLE
+        }
+
 
         return view
     }

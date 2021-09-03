@@ -43,6 +43,7 @@ class VerifyTransactionFragment : BottomSheetDialogFragment() {
                 val behaviour = BottomSheetBehavior.from(it)
                 setupFullHeight(it)
                 behaviour.state = BottomSheetBehavior.STATE_EXPANDED
+                behaviour.isDraggable = false
             }
         }
         return dialog
@@ -64,7 +65,14 @@ class VerifyTransactionFragment : BottomSheetDialogFragment() {
         transactionTitleTextView = view.findViewById(R.id.transactionTitleTextView)
         transactionSubtitleTextView = view.findViewById(R.id.transactionSubtitleTextView)
 
+        payButton.setBackgroundColor(PelpaySdk.primaryColor)
+        payButton.setTextColor(PelpaySdk.primaryTextColor)
         payButton.text = "Done"
+
+        if(PelpaySdk.hidePelpayLogo){
+            val securedLogo: ImageView = view.findViewById(R.id.secured_logo)
+            securedLogo.visibility = View.INVISIBLE
+        }
 
         return view
     }
@@ -90,6 +98,12 @@ class VerifyTransactionFragment : BottomSheetDialogFragment() {
         payButton.setOnClickListener {
             parentFragmentManager.fragments.let {
                 if (it.isNotEmpty()) {
+                    if (viewModel.isSuccessFul.value == true) {
+                        PelpaySdk.callback?.onSuccess(PelpaySdk.advice?.adviceReference)
+                    } else {
+                        PelpaySdk.callback?.onError(viewModel.errorMessage.value)
+                    }
+
                     parentFragmentManager.beginTransaction().apply {
                         for (fragment in it) {
                             remove(fragment)

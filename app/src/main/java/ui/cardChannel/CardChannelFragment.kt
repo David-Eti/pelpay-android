@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.ImageView
+import android.widget.LinearLayout
 import androidx.annotation.Nullable
 import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.Toolbar
@@ -21,6 +22,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import enums.Environment
 import enums.PaymentChannel
 import kotlinx.serialization.ExperimentalSerializationApi
 import models.requests.CardRequest
@@ -69,6 +71,7 @@ class CardChannelFragment : BottomSheetDialogFragment() {
                 val behaviour = BottomSheetBehavior.from(it)
                 setupFullHeight(it)
                 behaviour.state = BottomSheetBehavior.STATE_EXPANDED
+                behaviour.isDraggable = false
             }
         }
         return dialog
@@ -103,9 +106,19 @@ class CardChannelFragment : BottomSheetDialogFragment() {
 
         cardType = view.findViewById(R.id.card_type)
 
+        payButton.setBackgroundColor(PelpaySdk.primaryColor)
+        payButton.setTextColor(PelpaySdk.primaryTextColor)
+
         payButton.text = String.format("Pay ₦%s", PelpaySdk.transaction?.amount)
 
-
+        if(PelpaySdk.hidePelpayLogo){
+            val securedLogo: ImageView = view.findViewById(R.id.secured_logo)
+            securedLogo.visibility = View.INVISIBLE
+        }
+        if(PelpaySdk.environment == Environment.Production){
+            val testLayout: LinearLayout = view.findViewById(R.id.test_layout)
+            testLayout.visibility = View.GONE
+        }
 
         return view
     }

@@ -9,7 +9,7 @@ package constants
 object URLs {
 
     const val STAGING = "https://api.pelpay.ng"
-    const val PRODUCTION = "https://api.pelpay.ng"
+    const val PRODUCTION = "https://api.pelpay.africa"
 
 
     //ACCOUNT ENDPOINTS

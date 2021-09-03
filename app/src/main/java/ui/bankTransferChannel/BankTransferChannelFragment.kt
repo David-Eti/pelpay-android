@@ -11,6 +11,8 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
+import android.widget.ImageView
+import android.widget.LinearLayout
 import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.Toolbar
 import application.PelpaySdk
@@ -19,6 +21,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.textfield.TextInputLayout
+import enums.Environment
 import kotlinx.serialization.ExperimentalSerializationApi
 import models.responses.SupportedBank
 import ui.customWebView.CustomWebViewFragment
@@ -52,9 +55,21 @@ class BankTransferChannelFragment : BottomSheetDialogFragment() {
 
         payButton = view.findViewById(R.id.payButton)
 
+        payButton.setBackgroundColor(PelpaySdk.primaryColor)
+        payButton.setTextColor(PelpaySdk.primaryTextColor)
+
         payButton.text = String.format("Pay ₦%s", PelpaySdk.transaction?.amount)
 
         payButton.isEnabled = false
+
+        if(PelpaySdk.hidePelpayLogo){
+            val securedLogo: ImageView = view.findViewById(R.id.secured_logo)
+            securedLogo.visibility = View.INVISIBLE
+        }
+        if(PelpaySdk.environment == Environment.Production){
+            val testLayout: LinearLayout = view.findViewById(R.id.test_layout)
+            testLayout.visibility = View.GONE
+        }
 
         return view
     }
@@ -70,6 +85,8 @@ class BankTransferChannelFragment : BottomSheetDialogFragment() {
                 val behaviour = BottomSheetBehavior.from(it)
                 setupFullHeight(it)
                 behaviour.state = BottomSheetBehavior.STATE_EXPANDED
+                behaviour.isDraggable = false
+
             }
         }
         return dialog
