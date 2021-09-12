@@ -1,5 +1,5 @@
 plugins {
-    id 'com.android.application'
+    id("com.android.library")
 }
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlinx-serialization'
