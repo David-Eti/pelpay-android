@@ -6,30 +6,29 @@ Welcome to Pelpay's Android SDK. This library will help you accept card and alte
 - Bank Payment
 - Bank Transfer
 ## Installation
+[![](https://jitpack.io/v/David-Eti/pelpay_android.svg)](https://jitpack.io/#David-Eti/pelpay_android)
 ### Install and Configure the SDK
 1. Add it in your root build.gradle at the end of repositories:
 
 ```
-	allprojects {
-	   repositories {
-		   ...
-		   maven { url 'https://jitpack.io' }
-	   }
+allprojects {
+		repositories {
+			...
+			maven { url 'https://jitpack.io' }
+		}
 	}
 ```
 2. Add the dependency
 ```
-
-	dependencies {
-	   implementation 'xxx'
+dependencies {
+	        implementation 'com.github.David-Eti:pelpay_android:0.1.0'
 	}
-  
 ```
 ### Configure your Pelpay integration
 **Step 1**: Configure Client ID, Client Secret & Integration Key
 After installation of the Pelpay SDK, configure it with your Client ID, Client Secret & Integration Key gotten from your merchant dashboard, for both test and production
 
-#### Simple Integration generation (Kotlin)
+#### Sample Integration (Kotlin)
 ```kotlin
   PelpaySdk.setTransaction(Transaction(
                 amount = 50,
@@ -62,3 +61,20 @@ After installation of the Pelpay SDK, configure it with your Client ID, Client S
             }
         })
 ```
+---
+
+**Note** : Ensure when going live, you change the implementation from Staging `Environment.Staging` to production `Environment.Production`. 
+Also ensure you don't use staging credentials on production
+
+**Demo**
+
+Use the `5061 2000 0000 0000 195` test card number to trigger an OTP payment flow with CVV/CVC: `109` future expiration date: `12/2025`, Pin: `1234`
+
+Use the `4456 5300 0000 0007` test card number to trigger a 3D Secure payment flow with CVV/CVC: `444` future expiration date: `12/2025`, Pin: `1234`
+
+Use the *WEMA BANK* with Account number `0238681912` to test bank transactions.
+
+OTP: `123456`
+
+
+---
