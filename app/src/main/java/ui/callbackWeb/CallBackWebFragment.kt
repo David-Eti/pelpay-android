@@ -1,7 +1,6 @@
-package ui.customWebView
+package ui.callbackWeb
 
 import android.annotation.SuppressLint
-import android.annotation.TargetApi
 import android.app.Dialog
 import android.graphics.Bitmap
 import android.graphics.Color
@@ -11,44 +10,26 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.webkit.*
-import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.Toolbar
 import application.PelpaySdk
 import com.example.pelpaysamplebuildandroid.R
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
 import kotlinx.serialization.ExperimentalSerializationApi
-import models.requests.CompleteCardRequest
-import models.responses.ProcessCardResponse
-import networking.NetworkServiceImpl
 import ui.library.LoadingProgressDialog
 import ui.verify.VerifyTransactionFragment
-import utilities.ResultWrapper
-import java.net.URLEncoder
-import java.util.*
 
-
-/**
- * Created by Ehigiator David on 23/08/2021.
- * Pelpay
- * david3ti@gmail.com
- */
-class CustomWebViewFragment constructor(var cardResponse: ProcessCardResponse) : BottomSheetDialogFragment() {
+class CallBackWebFragment constructor(var callBackUrl: String?) : BottomSheetDialogFragment() {
 
     private lateinit var webView: WebView
     private lateinit var progressDialog: LoadingProgressDialog
-    private lateinit var randomString: String
-    private var loadCountPelpay =  0
 
     private fun setupFullHeight(bottomSheet: View) {
         val layoutParams = bottomSheet.layoutParams
@@ -88,7 +69,6 @@ class CustomWebViewFragment constructor(var cardResponse: ProcessCardResponse) :
 
         progressDialog = LoadingProgressDialog(requireContext())
 
-        randomString = UUID.randomUUID().toString()
         return view
     }
 
@@ -164,61 +144,7 @@ class CustomWebViewFragment constructor(var cardResponse: ProcessCardResponse) :
 
             override fun onPageFinished(view: WebView, url: String) {
                 super.onPageFinished(view, url)
-                Log.e("SECURE3D", "onPageFinished: $url")
-
-                if (url.startsWith("https://centinelapistag.cardinalcommerce.com/V1/Cruise/Collect")) {
-                    progressDialog.dismiss()
-
-                    val htmlString =
-                            """
-                              <html>
-                                <header>
-                                    <script type="text/javascript" src="https://h.online-metrix.net/fp/tags.js?org_id=${cardResponse.responseData?.orgID}&session_id=${cardResponse.responseData?.sessionMerchantID}$randomString"></script>
-                                 </header>
-                                 <body>
-                                 </body>
-                               </html>  
-                            """
-                    progressDialog.show()
-                    webView.loadDataWithBaseURL("about:blank", htmlString, "text/html", "UTF-8", null)
-                }
-
-                if (url.startsWith("about:blank")) {
-                    val scope = CoroutineScope(Job() + Dispatchers.Main)
-
-                    progressDialog.show()
-
-                    scope.launch {
-                        when (val cardCompleteResponse = NetworkServiceImpl().getNetworkService().validateCardPayment(CompleteCardRequest(
-                                paymentreference = cardResponse.responseData?.paymentReference, value = randomString
-                        ), token = PelpaySdk.accessToken!!)) {
-                            is ResultWrapper.NetworkError -> {
-                                progressDialog.dismiss()
-                                Log.e("cardCompleteResponse", "NetworkError:  $cardCompleteResponse")
-
-                            }
-                            is ResultWrapper.GenericError -> {
-                                progressDialog.dismiss()
-                                Log.e("cardCompleteResponse", "GenericError:  $cardCompleteResponse")
-
-                            }
-                            is ResultWrapper.Success -> {
-                                progressDialog.dismiss()
-                                when (cardCompleteResponse.value.responseData?.transactionStatus?.lowercase()) {
-                                    "secure3d" -> {
-
-                                        val postData = "JWT=${URLEncoder.encode(cardCompleteResponse.value.responseData?.formData?.formData?.jwt, "UTF-8")}"
-                                        webView.postUrl(cardCompleteResponse.value.responseData.formData?.url!!, postData.toByteArray())
-                                    }
-                                    "failed" -> {
-
-                                    }
-                                }
-                            }
-                        }
-                    }
-
-                }
+                Log.e("CallBack", "onPageFinished: $url")
 
                 if(url.startsWith("https://payment.pelpay.ng") || url.startsWith("https://payment.pelpay.africa")){
                     Handler(Looper.getMainLooper()).postDelayed(
@@ -230,12 +156,13 @@ class CustomWebViewFragment constructor(var cardResponse: ProcessCardResponse) :
                             5000 // value in milliseconds
                     )
                 }
-
             }
         }
 
-        val postData = "JWT=${URLEncoder.encode(cardResponse.responseData?.formData?.formData?.jwt, "UTF-8")}"
-        webView.postUrl(cardResponse.responseData?.formData?.url!!, postData.toByteArray())
+        if(callBackUrl == null){
+            callBackUrl = ""
+        }
+        webView.loadUrl(callBackUrl!!)
     }
 
 

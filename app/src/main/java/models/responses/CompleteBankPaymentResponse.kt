@@ -25,5 +25,7 @@ data class CompleteBankResponseData (
         val narration: String,
         val env: String,
         val accountNumber: String,
-        val bankName: String
+        val bankName: String,
+        val callBackUrl: String,
+        val returnUrl: String
 )

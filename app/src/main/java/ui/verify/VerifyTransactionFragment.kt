@@ -98,6 +98,7 @@ class VerifyTransactionFragment : BottomSheetDialogFragment() {
         payButton.setOnClickListener {
             parentFragmentManager.fragments.let {
                 if (it.isNotEmpty()) {
+                    progress.dismiss()
                     if (viewModel.isSuccessFul.value == true) {
                         PelpaySdk.callback?.onSuccess(PelpaySdk.advice?.adviceReference)
                     } else {

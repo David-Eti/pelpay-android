@@ -16,6 +16,19 @@
         app:titleTextAppearance="@style/TextAppearance.AppCompat.Subhead"
         app:titleTextColor="@color/black" />
 
+    <TextView
+        android:id="@+id/otpMessageTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:maxLines="3"
+        android:paddingStart="32dp"
+        android:paddingEnd="32dp"
+        android:text=""
+        android:textAppearance="?attr/textAppearanceSubtitle1" />
+
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/otpInputLayout"

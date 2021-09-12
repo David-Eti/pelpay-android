@@ -224,7 +224,7 @@ class CardChannelFragment : BottomSheetDialogFragment() {
                     customWebViewFragment.show(parentFragmentManager, customWebViewFragment.tag)
                 }
                 "otp" -> {
-                    val otpFragment = OtpFragment(paymentChannel = PaymentChannel.Card, paymentReference = cardResponse.responseData.paymentReference!!) //from card payment channel
+                    val otpFragment = OtpFragment(paymentChannel = PaymentChannel.Card, paymentReference = cardResponse.responseData.paymentReference!!, message = cardResponse.responseData.message) //from card payment channel
                     otpFragment.show(parentFragmentManager, otpFragment.tag)
                 }
                 "authsetup" -> {

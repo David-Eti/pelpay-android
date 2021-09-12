@@ -52,7 +52,7 @@ class MainActivity : AppCompatActivity() {
                         customerFirstName = "adeoye",
                         customerEmail = "olajuwon@yopmail.com",
                         customerPhoneNumber = "07039544295",
-                        customerAddress = "",
+                        customerAddress = "16 Egbeda Road",
                         customerCity = "Lagos",
                         customerStateCode = "LA",
                         customerPostalCode = "12345",

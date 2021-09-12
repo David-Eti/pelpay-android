@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.Toolbar
 import androidx.core.widget.addTextChangedListener
@@ -24,6 +25,8 @@ import com.google.android.material.textfield.TextInputLayout
 import enums.PaymentChannel
 import kotlinx.serialization.ExperimentalSerializationApi
 import models.responses.ProcessCardResponse
+import ui.callbackWeb.CallBackWebFragment
+import ui.customWebView.CustomWebViewFragment
 import ui.dropInUI.ARG_ITEM_COUNT
 import ui.dropInUI.DropInFragment
 import ui.library.LoadingProgressDialog
@@ -32,13 +35,16 @@ import java.lang.ref.PhantomReference
 import java.security.InvalidParameterException
 
 
-class OtpFragment constructor(var paymentReference: String, var paymentChannel: PaymentChannel) : BottomSheetDialogFragment() {
+class OtpFragment constructor(var paymentReference: String, var message: String?, var paymentChannel: PaymentChannel) : BottomSheetDialogFragment() {
 
 
     private lateinit var viewModel: OtpViewModel
     lateinit var otpInputLayout: TextInputLayout
     lateinit var otpEditText: TextInputEditText
     lateinit var payButton: AppCompatButton
+    lateinit var otpMessageTextView: TextView
+
+
     private var otp: String? = null
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -75,13 +81,13 @@ class OtpFragment constructor(var paymentReference: String, var paymentChannel: 
 
         otpInputLayout = view.findViewById(R.id.otpInputLayout)
         otpEditText = view.findViewById(R.id.otpEditText)
-
+        otpMessageTextView = view.findViewById(R.id.otpMessageTextView)
         payButton = view.findViewById(R.id.payButton)
 
         payButton.setBackgroundColor(PelpaySdk.primaryColor)
         payButton.setTextColor(PelpaySdk.primaryTextColor)
         payButton.text = String.format("Complete Payment ₦%s", PelpaySdk.transaction?.amount)
-
+        otpMessageTextView.text  = message
         payButton.isEnabled = false
 
         if(PelpaySdk.hidePelpayLogo){
@@ -139,14 +145,41 @@ class OtpFragment constructor(var paymentReference: String, var paymentChannel: 
 
         viewModel.completeCardResponse.observe(this, { completedCardResponse ->
             Log.d("OTPFragment", "completedCardResponse: $completedCardResponse")
-            val verifyTransactionFragment = VerifyTransactionFragment.newInstance()
-            verifyTransactionFragment.show(parentFragmentManager, verifyTransactionFragment.tag)
+            when (completedCardResponse.responseData?.transactionStatus?.lowercase()) {
+                "callbacklisten" -> {
+                    val callBackWebFragment = CallBackWebFragment(callBackUrl = completedCardResponse.responseData.returnURL)
+                    callBackWebFragment.show(parentFragmentManager, callBackWebFragment.tag)
+                }
+                "successful" -> {
+                    val verifyTransactionFragment = VerifyTransactionFragment.newInstance()
+                    verifyTransactionFragment.show(parentFragmentManager, verifyTransactionFragment.tag)
+                }
+                else -> {
+                    val verifyTransactionFragment = VerifyTransactionFragment.newInstance()
+                    verifyTransactionFragment.show(parentFragmentManager, verifyTransactionFragment.tag)
+                }
+
+            }
         })
 
         viewModel.completeBankPaymentResponse.observe(this, { completedBankResponse ->
             Log.d("OTPFragment", "completedBankResponse: $completedBankResponse")
-            val verifyTransactionFragment = VerifyTransactionFragment.newInstance()
-            verifyTransactionFragment.show(parentFragmentManager, verifyTransactionFragment.tag)
+            when (completedBankResponse.responseData.transactionStatus.lowercase()) {
+                "callbacklisten" -> {
+                    val callBackWebFragment = CallBackWebFragment(callBackUrl = completedBankResponse.responseData.returnUrl)
+                    callBackWebFragment.show(parentFragmentManager, callBackWebFragment.tag)
+                }
+                "successful" -> {
+                    val verifyTransactionFragment = VerifyTransactionFragment.newInstance()
+                    verifyTransactionFragment.show(parentFragmentManager, verifyTransactionFragment.tag)
+                }
+                else -> {
+                    val verifyTransactionFragment = VerifyTransactionFragment.newInstance()
+                    verifyTransactionFragment.show(parentFragmentManager, verifyTransactionFragment.tag)
+                }
+
+            }
+
         })
 
     }
