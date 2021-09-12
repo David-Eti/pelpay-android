@@ -1,2 +1,2 @@
-rootProject.name = "pelpaysamplebuildandroid"
+rootProject.name = "pelpay_android"
 include ':app'

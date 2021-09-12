@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">pelpaysamplebuildandroid</string>
+    <string name="app_name">Pelpay</string>
     <string name="process_message">Processing…please wait</string>
     <string name="logo_text">Logo</string>
     <string name="title_activity_drop_in">DropInActivity</string>
