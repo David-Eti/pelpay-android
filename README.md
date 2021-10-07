@@ -32,7 +32,7 @@ allprojects {
 2. Add the dependency
 ```
 dependencies {
-	        implementation 'com.github.David-Eti:pelpay_android:1.0.0'
+	        implementation 'com.github.David-Eti:pelpay_android:1.0.1'
 	}
 ```
 ### Configure your Pelpay integration
@@ -78,7 +78,7 @@ After installation of the Pelpay SDK, configure it with your Client ID, Client S
 To do this, after the `.setHidePelpayLogo(false)` call:
 
 ```kotlin
-            .setMerchantLogo(drawable)
+            setMerchantLogo(drawable)
 ```
 **Note** : Ensure when going live, you change the implementation from Staging `Environment.Staging` to production `Environment.Production`. 
 Also ensure you don't use staging credentials on production
