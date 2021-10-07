@@ -1,6 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="app/src/main/res/drawable/ic_bank_channel.xml" value="0.3260416666666667" />
+        <entry key="app/src/main/res/drawable/ic_pelpay_logo.xml" value="0.321025641025641" />
+        <entry key="app/src/main/res/drawable/ic_pelpay_logo_full.xml" value="0.321025641025641" />
+        <entry key="app/src/main/res/drawable/ic_secured_by_pelpay.xml" value="0.321025641025641" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.15070921985815602" />
+        <entry key="app/src/main/res/layout/bank_channel_fragment.xml" value="0.15070921985815602" />
+        <entry key="app/src/main/res/layout/bank_list_item.xml" value="0.15070921985815602" />
+        <entry key="app/src/main/res/layout/bank_transfer_channel_fragment.xml" value="0.15070921985815602" />
+        <entry key="app/src/main/res/layout/card_channel_fragment.xml" value="0.15070921985815602" />
+        <entry key="app/src/main/res/layout/card_layout.xml" value="0.15070921985815602" />
+        <entry key="app/src/main/res/layout/fragment_call_back_web.xml" value="0.15070921985815602" />
+        <entry key="app/src/main/res/layout/fragment_drop_in_list_dialog.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/fragment_drop_in_list_dialog_item.xml" value="0.15070921985815602" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

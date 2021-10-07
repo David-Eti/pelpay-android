@@ -1,6 +1,17 @@
 # Pelpay Android SDK
 Welcome to Pelpay's Android SDK. This library will help you accept card and alternative payments in your Android app.
 **The Pelpay Android SDK permits a deployment target of Android version 21 or higher**.
+
+## Features
+- Highly customizable: Change look & feel of the SDK to suit your brand, set your own logo
+- Multiple payment methods
+- 3D-Secure & many more
+
+| Pay VIA Credit Card | Pay VIA Bank Payment | Pay VIA Bank Transfer |
+| ------------- | ------------- | ------------- |
+| <img src="images/pelpay_card_payment.gif"  />  | <img src="images/pelpay_bank_payment.gif"  />  |<img src="images/pelpay_transfer_payment.gif"  />|
+
+
 ## Supported Payment Methods
 - Credit Card
 - Bank Payment
@@ -21,7 +32,7 @@ allprojects {
 2. Add the dependency
 ```
 dependencies {
-	        implementation 'com.github.David-Eti:pelpay_android:0.1.0'
+	        implementation 'com.github.David-Eti:pelpay_android:1.0.0'
 	}
 ```
 ### Configure your Pelpay integration
@@ -63,6 +74,12 @@ After installation of the Pelpay SDK, configure it with your Client ID, Client S
 ```
 ---
 
+##### Optional (You can add a merchant logo)
+To do this, after the `.setHidePelpayLogo(false)` call:
+
+```kotlin
+            .setMerchantLogo(drawable)
+```
 **Note** : Ensure when going live, you change the implementation from Staging `Environment.Staging` to production `Environment.Production`. 
 Also ensure you don't use staging credentials on production
 

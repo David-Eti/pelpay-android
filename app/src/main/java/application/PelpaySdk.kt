@@ -55,6 +55,11 @@ object PelpaySdk {
         return this
     }
 
+    fun setMerchantLogo(drawable: Drawable): PelpaySdk {
+        this.merchantLogo = drawable
+        return this
+    }
+
     fun setBrandPrimaryTextColor(color: Int): PelpaySdk {
         this.primaryTextColor = color
         return this

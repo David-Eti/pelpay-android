@@ -70,6 +70,14 @@ class DropInFragment : BottomSheetDialogFragment(), PaymentSelectionListener {
             PelpaySdk.callback?.onError(errorMessage = "User cancelled the transaction")
             parentFragmentManager.beginTransaction().remove(this).commit()
         }
+
+        val merchantLogoImageView: ImageView = view.findViewById(R.id.merchantLogoImageView)
+
+        if(PelpaySdk.merchantLogo != null){
+            merchantLogoImageView.visibility = View.VISIBLE
+            merchantLogoImageView.setImageDrawable(PelpaySdk.merchantLogo)
+        }
+
         val recyclerView: RecyclerView = view.findViewById(R.id.list)
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = itemAdapter

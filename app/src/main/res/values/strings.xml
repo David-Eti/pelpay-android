@@ -27,4 +27,5 @@
     <string name="test_mode_string">Staging environment. Do not use live details</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="merchant_logo">merchant logo</string>
 </resources>

@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.AppCompatButton
+import androidx.core.content.ContextCompat
 import application.PelpaySdk
 import application.PelpaySdkCallback
 import com.example.pelpaysamplebuildandroid.R
@@ -58,7 +59,7 @@ class MainActivity : AppCompatActivity() {
                         customerPostalCode = "12345",
                         customerCountryCode = "NG"
                 )
-        )).setBrandPrimaryColor(Color.parseColor("#009F49")).setHidePelpayLogo(false).initialise(environment = Environment.Staging, clientId = "Ken0000004",
+        )).setMerchantLogo(ContextCompat.getDrawable(this, R.drawable.ic_pelpay_logo_full)!!).setBrandPrimaryColor(Color.parseColor("#009F49")).setHidePelpayLogo(false).initialise(environment = Environment.Staging, clientId = "Ken0000004",
                 clientSecret = "d36eb5dd-a89f-411a-b024-4cdc11673c11", context = this).withCallBack(callback = object : PelpaySdkCallback() {
             override fun onSuccess(adviceReference: String?) {
 

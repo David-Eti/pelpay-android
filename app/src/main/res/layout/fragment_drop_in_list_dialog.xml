@@ -19,6 +19,16 @@
         app:titleTextAppearance="@style/TextAppearance.AppCompat.Subhead"
         app:titleTextColor="@color/black" />
 
+    <ImageView
+        android:id="@+id/merchantLogoImageView"
+        android:layout_width="wrap_content"
+        android:visibility="gone"
+        android:paddingStart="@dimen/list_item_spacing"
+        android:paddingEnd="@dimen/list_item_spacing"
+        android:contentDescription="@string/merchant_logo"
+        android:scaleType="fitStart"
+        android:layout_gravity="start"
+        android:layout_height="80dp"/>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list"
         android:layout_width="match_parent"
